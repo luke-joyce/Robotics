@@ -63,6 +63,10 @@ lidar.enablePointCloud()
 # array that contains all the angles is to use linspace from
 # the numpy package.
 
+lidar_sensor_readings = []
+lidar_rays_angles = np.linspace(LIDAR_ANGLE_RANGE/-2, LIDAR_ANGLE_RANGE/2, LIDAR_ANGLE_BINS)
+robotPath = []
+print(lidar_rays_angles)
 
 
 #### End of Part 1 #####
@@ -87,8 +91,12 @@ while robot.step(SIM_TIMESTEP) != -1:
     # Come up with a way to turn the robot pose (in world coordinates)
     # into coordinates on the map. Draw a red dot using display.drawPixel()
     # wherehere the robot moves.
+    map_pose_x = int(pose_x * 300) 
+    map_pose_y = int(pose_y * 300)
     
-
+    robotPath.append((map_pose_x, map_pose_y))
+    #display.setColor(0xFF0000)
+    #display.drawPixel(map_pose_x, map_pose_y)
     
     
     ##### Part 3: Convert Lidar data into world coordinates
@@ -97,15 +105,36 @@ while robot.step(SIM_TIMESTEP) != -1:
     # First compute the corresponding rx and ry of where the lidar
     # hits the object in the robot coordinate system. Then convert
     # rx and ry into world coordinates wx and wy. This lab uses
-    # the Webots coordinate system (except that we use Y instead of Z).
+    # the Webots coordinate system (except tha///////t we use Y instead of Z).
     # The arena is 1x1m2 and its origin is in the top left of the arena. 
     
-
+    for i in range(0, 21):
+        if(lidar_sensor_readings[i] > LIDAR_SENSOR_MAX_RANGE):
+            lidar_sensor_readings[i] = LIDAR_SENSOR_MAX_RANGE
+           
+        #display.setColor(0x0000FF)
+        rpose_x = lidar_sensor_readings[i] * math.cos(lidar_rays_angles[i])
+        rpose_y = lidar_sensor_readings[i] * math.sin(lidar_rays_angles[i])
+        #display.drawPixel(int(300*rpose_x), int(300*rpose_y))
+    
+        # Convert robot coordinates to world coordinates
+        wpose_x = rpose_x*math.sin(pose_theta) - rpose_y*math.cos(pose_theta)
+        wpose_y = rpose_x*math.cos(pose_theta) + rpose_y*math.sin(pose_theta)
+        
+        #Calculate lidar reading coordinates on map
+        obs_x = int((wpose_x + pose_x)*300)
+        obs_y = int((wpose_y + pose_y)*300)
     
     
     ##### Part 4: Draw the obstacle and free space pixels on the map
  
-    
+        display.setColor(0xFFFFFF)
+        display.drawLine(map_pose_x, map_pose_y,obs_x, obs_y)
+        display.setColor(0x0000FF)
+        display.drawPixel(obs_x, obs_y)
+        
+        display.setColor(0xFF0000)
+        display.drawPixel(map_pose_x, map_pose_y) 
           
 
     
