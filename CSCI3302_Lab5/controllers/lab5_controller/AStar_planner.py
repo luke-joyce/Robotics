@@ -1,17 +1,15 @@
 
 from queue import PriorityQueue
-import numpy as np 
-import pandas as pd
 import matplotlib.pyplot as plt
 # %matplotlib inline
-
-# A* is F = G + H
-# where F is the total cost of the node.
-# 		G is the distance between the current node and the start node.
-# 		H is the heuristic — estimated distance from the current node to the end node.
+"""
+A* is F = G + H 
+ G is the distance between the current node and the start node.
+ H is the heuristic — estimated distance from the current node to the end node.
+"""
 class Nodes:
 	"""docstring for Nodes"""
-	def __init__(self, prviousNode=None, currentNude = None ):
+	def __init__(self, prviousNode=None, currentNude = None):
 		super(Nodes, self).__init__()
 		self.prviousNode = prviousNode
 		self.currentNude = currentNude
@@ -24,8 +22,11 @@ class Nodes:
 	def update_location(self, dirctions):
 		self.location =[]
 
+	def get_location(self, colums,rows):
+		return self.colums, self.rows
 
-		pass
+	def __lt__(self, other):
+		return False
 
 
 # function reconstruct_path(cameFrom, current)
@@ -39,17 +40,19 @@ def path_safer(prviousNode, currentNude):
 		path =[]
 		while currentNude != None:
 			currentNude = prviousNode[currentNude]
-			return path
-
-			pass
-		pass
+			path.append(currentNude)
+		return path
+"""
+// A* finds a path from start to end.
+// map is the heuristic function. map(n) estimates the cost to reach goal from node n.
+"""	
 
 def a_star_path_paln(map, start, end):
-	start_position = (None, start)
+	start_position = Nodes(None, start)
 
-	end_position = (None, end)
+	end_position = Nodes(None, end)
 
-	visted_NodeList = []
+	visted_NodeList = [] #For node n, visted_NodeList[n] is the node immediately preceding it on the cheapest path from start
 
 	not_visted_NodeList=[]
 
@@ -75,6 +78,32 @@ def a_star_path_paln(map, start, end):
 		(x, y-1), #left
 		(x, y+1), #right
 		]  
+		for ii in range((node_neibers)):
+			map_path = map.get(ii)
+
+			if (map_path!='0'):
+				continue
+
+			add_node_to_list = Nodes(ii, current)
+
+			if added_node_list in visted_NodeList:
+				pass
+
+
+ 
+
+			# add_node_to_list.G =abs(add_node_to_list.currentNude[0] - start_position.currentNude[0])+abs(add_node_to_list.currentNude[0] - start_position.currentNude[0])
+			# add_node_to_list.H =abs(add_node_to_list.currentNude[0] - end_position.currentNude[0])+abs(add_node_to_list.currentNude[0] - end_position.currentNude[0]) 
+			# add_node_to_list.F = add_node_to_list.G + add_node_to_list.H 
+			add_node_to_list.F[start] = heuristic(start_position.get_location(), end_position.get_location())
+
+			for node in range(not_visted_NodeList):
+				if (add_node_to_list == node and add_node_to_list.F >= node.F):
+					not_visted_NodeList.append(add_node_to_list)
+
+				pass
+		return None
+
 
 
 

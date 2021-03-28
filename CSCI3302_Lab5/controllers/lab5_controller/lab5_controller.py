@@ -4,7 +4,7 @@ import math
 import numpy as np
 from matplotlib import pyplot as plt
 from scipy.signal import convolve2d # Uncomment if you want to use something else for finding the configuration space
-
+import AStar_planner
 MAX_SPEED = 7.0  # [rad/s]
 MAX_SPEED_MS = 0.633 # [m/s]
 AXLE_LENGTH = 0.4044 # m
