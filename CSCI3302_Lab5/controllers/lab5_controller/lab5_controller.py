@@ -188,15 +188,16 @@ while robot.step(timestep) != -1 and mode != 'planner':
 
             # You will eventually REPLACE the following 2 lines with a more robust version of map
             # and gray drawing that has more levels than just 0 and 1.
-            (pixel_x, pixel_y) = (int(wx*30), int(wy*30))
-            if(pixel_x >= 0 and pixel_x < 360 and pixel_y >= 0 and pixel_y < 360):
-                map[pixel_x][pixel_y] += 0.005
-                if(map[pixel_x][pixel_y] >= 1.0):
-                    map[pixel_x][pixel_y] = 1.0
-                g = int(map[pixel_x][pixel_y]*255)
+            
+            obs_x = int(wx*30)
+            obs_y = int(wy*30)
+            
+            if(obs_x >= 0 and obs_x < 360 and obs_y >= 0 and obs_y < 360):
+                map[obs_x][obs_y] += 0.005
+                g = int(min(map[obs_x][obs_y], 1.0) * 255)
                 g = int((g*256**2+g*256+g))
                 display.setColor(g)
-                display.drawPixel(360-int(wy*30),int(wx*30))
+                display.drawPixel(360-int(wy*30), int(wx*30))
             #display.setColor(0xFFFFFF)
             #display.drawPixel(360-int(wy*30),int(wx*30))
 
