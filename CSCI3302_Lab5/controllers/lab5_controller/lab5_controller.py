@@ -72,8 +72,8 @@ vR = 0
 
 ##################### IMPORTANT #####################
 # Set the mode here. Please change to 'autonomous' before submission
-mode = 'manual' # Part 1.1: manual mode
-# mode = 'planner'
+# mode = 'manual' # Part 1.1: manual mode
+mode = 'planner'
 # mode = 'autonomous'
 
 lidar_sensor_readings = []
@@ -91,10 +91,6 @@ compass.enable(timestep)
 # Planner
 #
 ###################
-from matplotlib import pyplot as plt 
-import numpy as np 
-# plt.imshow(map) 
-# plt.show()
 
 if mode == 'planner':
 # Part 2.3: Provide start and end in world coordinate frame and convert it to map's frame
@@ -113,26 +109,39 @@ if mode == 'planner':
         :param end: A tuple of indices representing the end cell in the map
         :return: A list of tuples as a path from the given start to the given end in the given maze
         '''
-        # map = []
-        #setting stating point to 0
-        # start.set_distance(0) 
-        # unvistedRoom = [(v.get_distance(),v )for v in map]
         
-        # for i in range (N_PARTS):
-            # map.append(0)
-        # for x in range(N_PARTS):
-            
+        start_w = (None, start)
         
+        end_w = (None, end)
         
+        visted_NodeList = []
+        
+        not_visted_NodeList=[]
+        
+        not_visted_NodeList.append(start_w)
+
+        while len(not_visted_NodeList) > 0:
+		current = not_visted_NodeList.pop(0)
+		visted_NodeList.append(current)
+
+		if current == end_position:
+			path =[]
+			while current!= start_w:
+				path.append(current.currentNude)
+				current = current.prviousNode
+			return path[::-1]
         pass
 
 
 # Part 2.1: Load map (map.npy) from disk and visualize it
 
-
+map = np.load("map.npy")
+plt.imshow(map, cmap='gray')
+plt.show()
+print("Map loaded")
 
 # Part 2.3 continuation: Call path_planner
-
+path_planner()
 
 # Part 2.4: Turn paths into goal points and save on disk as path.npy and visualize it
 
