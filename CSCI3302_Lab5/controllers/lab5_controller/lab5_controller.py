@@ -142,7 +142,7 @@ if mode == 'planner':
 
 # Initialize your map data structure here as a 2D floating point array
 if mode == 'manual':
-    map = None # Replace None by a numpy 2D floating point array
+    map = np.zeros([360,360]) # Replace None by a numpy 2D floating point array
 
 
 if mode == 'autonomous':
@@ -188,8 +188,18 @@ while robot.step(timestep) != -1 and mode != 'planner':
 
             # You will eventually REPLACE the following 2 lines with a more robust version of map
             # and gray drawing that has more levels than just 0 and 1.
-            display.setColor(0xFFFFFF)
-            display.drawPixel(360-int(wy*30),int(wx*30))
+            
+            obs_x = int(wx*30)
+            obs_y = int(wy*30)
+            
+            if(obs_x >= 0 and obs_x < 360 and obs_y >= 0 and obs_y < 360):
+                map[obs_x][obs_y] += 0.005
+                g = int(min(map[obs_x][obs_y], 1.0) * 255)
+                g = int((g*256**2+g*256+g))
+                display.setColor(g)
+                display.drawPixel(360-int(wy*30), int(wx*30))
+            #display.setColor(0xFFFFFF)
+            #display.drawPixel(360-int(wy*30),int(wx*30))
 
     display.setColor(int(0xFF0000))
     display.drawPixel(360-int(pose_y*30),int(pose_x*30))
@@ -221,11 +231,13 @@ while robot.step(timestep) != -1 and mode != 'planner':
             vR = 0
         elif key == ord('S'):
 # Part 1.4: Save map to disc
-
+            np.save("map.npy",map)
             print("Map file saved")
         elif key == ord('L'):
             # You will not use this portion but here's an example for loading saved a numpy array
             map = np.load("map.npy")
+            plt.imshow(map, cmap='gray')
+            plt.show()
             print("Map loaded")
         else: # slow down
             vL *= 0.75
