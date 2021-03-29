@@ -19,8 +19,8 @@ class Nodes:
 		self.H = 0
 		
 
-	def update_location(self, dirctions):
-		self.location =[]
+	def update_location(self,  colums,rows):
+		return self.colums, self.rows
 
 	def get_location(self, colums,rows):
 		return self.colums, self.rows
@@ -54,7 +54,7 @@ def a_star_path_paln(map, start, end):
 
 	visted_NodeList = [] #For node n, visted_NodeList[n] is the node immediately preceding it on the cheapest path from start
 
-	not_visted_NodeList=[]
+	not_visted_NodeList=PriorityQueue()
 
 	not_visted_NodeList.append(start_position)
 
@@ -72,22 +72,24 @@ def a_star_path_paln(map, start, end):
 
 		(x,y) = current.currentNude
 
-		node_neibers = [
+		node_neibers.location = [
 		(x-1, y), #up
 		(x+1, y), #down
 		(x, y-1), #left
 		(x, y+1), #right
 		]  
 		for ii in range((node_neibers)):
-			map_path = map.get(ii)
+			for jj in range(node_neibers):
+				
+				map_path = map.get(ii),map.get(jj)
 
-			if (map_path!='0'):
-				continue
+				if (map_path!='0'):
+					continue
 
-			add_node_to_list = Nodes(ii, current)
+				add_node_to_list = Nodes(ii, current)
 
-			if added_node_list in visted_NodeList:
-				pass
+				if added_node_list in visted_NodeList:
+					pass
 
 
  
@@ -109,9 +111,9 @@ def a_star_path_paln(map, start, end):
 
 	pass
 
-def heuristic(p1, p2):
-	x1,y1 = p1
-	x2, y2= p2
+def heuristic(point1, point2):
+	x1,y1 = point1
+	x2, y2= point2
 	return abs(x1 - x2) + abs(y1 - y2)
 
 
