@@ -65,7 +65,7 @@ def a_star_path_paln(map, start, end):
 
 		if current == end_position:
 			path =[]
-			while current!= start_position:
+			while current!= end_position:
 				path.append(current.currentNude)
 				current = current.prviousNode
 			return path[::-1]

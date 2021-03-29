@@ -126,7 +126,7 @@ if mode == 'planner':
 
 		if current == end_position:
 			path =[]
-			while current!= start_w:
+			while current!= end_w:
 				path.append(current.currentNude)
 				current = current.prviousNode
 			return path[::-1]
