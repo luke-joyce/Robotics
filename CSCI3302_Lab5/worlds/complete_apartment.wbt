@@ -1,4 +1,4 @@
-#VRML_SIM R2021b utf8
+#VRML_SIM R2021a utf8
 WorldInfo {
   info [
     "Sample of how the indoor objects can be placed"
@@ -1958,6 +1958,7 @@ DEF TREES Transform {
   ]
 }
 TiagoSteel {
+  hidden rotation_36 1 2.895952394127221e-10 -2.895963080592215e-10 1.5707999999999929
   translation 4.46793 0.172269 8.05674
   rotation 0.9310809087605929 0.2756919729841178 0.23891897658761382 -1.6198753071795862
   controller "lab5_controller"
