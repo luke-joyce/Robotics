@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-#VRML_SIM R2021b utf8
-=======
 #VRML_SIM R2021a utf8
->>>>>>> 073794a7113aa67c4f552db5d3e03444f0c64922
 WorldInfo {
   info [
     "Sample of how the indoor objects can be placed"
@@ -11,8 +7,8 @@ WorldInfo {
   coordinateSystem "NUE"
 }
 Viewpoint {
-  orientation -0.5453298342271841 0.6354576700795996 0.5466341751471075 2.0115861489360833
-  position 7.117285282676876 22.25785626331296 7.998717795487567
+  orientation 0.01663473145243986 0.6921421742580872 0.7215694674269366 3.1003540441376454
+  position 2.668710248602761 3.768746524837134 8.974780058836007
   exposure 0.5
   ambientOcclusionRadius 1
 }
@@ -673,7 +669,11 @@ PaperBoat {
   rotation 0.8814122440432525 0.40906511326094164 -0.23617406539129385 1.1598
 }
 BiscuitBox {
-  translation 12.3841 0.75 7.44218
+  translation 1.06782 0.91 3.6496
+  rotation 0 1 0 2.87979
+}
+BiscuitBox {
+  translation 2.46595 0.55 6.12057
   rotation 0 1 0 2.87979
   name "biscuit box(1)"
 }
@@ -794,6 +794,10 @@ Cabinet {
     "Shelf  (1, 2, 1, 0)"
     "Shelf  (1, 3, 1, 0)"
   ]
+}
+RubberDuck {
+  translation 11.0827 0.51 5.38744
+  rotation 0 1 0 -2.3561953071795863
 }
 RubberDuck {
   translation 10.7519 0.86 3.84199
@@ -1232,6 +1236,36 @@ Wall {
   size 3.2 2.4 0.3
 }
 Door {
+  translation 8.43 0 6.24
+  rotation 0 1 0 1.5708
+  size 1 2.4 0.3
+  jointAtLeft FALSE
+  frameSize 0.05 0.05 0.001
+  frameAppearance BrushedAluminium {
+  }
+  doorHandle DoorLever {
+    jointAtLeft FALSE
+  }
+}
+Door {
+  translation 8.43 0 4.94
+  rotation 0 1 0 1.5708
+  name "door(5)"
+  size 1 2.4 0.3
+  frameSize 0.05 0.05 0.001
+  frameAppearance BrushedAluminium {
+  }
+}
+Door {
+  translation 7.24 0 6.97
+  rotation 0 1 0 3.37175e-07
+  name "door(3)"
+  size 1 2.4 0.3
+  frameSize 0.05 0.05 0.001
+  frameAppearance BrushedAluminium {
+  }
+}
+Door {
   translation 6.6 0 0.91
   rotation 0 1 0 -1.5707953071795862
   name "door(4)"
@@ -1244,6 +1278,15 @@ Door {
   translation 7.49 0 0
   rotation 0 1 0 -3.1415923071795864
   name "door(1)"
+  size 1 2.4 0.3
+  frameSize 0.05 0.05 0.001
+  frameAppearance BrushedAluminium {
+  }
+}
+Door {
+  translation 8.43 0 2.14977
+  rotation 0 1 0 1.5708
+  name "door(2)"
   size 1 2.4 0.3
   frameSize 0.05 0.05 0.001
   frameAppearance BrushedAluminium {
@@ -1299,30 +1342,6 @@ Wall {
 Wall {
   translation 3.95 2.2 3.9
   name "wall 9(1)"
-  size 1 0.2 0.3
-}
-Wall {
-  translation 8.43 2.2 2.15
-  rotation 0 1 0 1.5708
-  name "wall 9(3)"
-  size 1 0.2 0.3
-}
-Wall {
-  translation 8.44 2.2 4.95
-  rotation 0 1 0 1.5708
-  name "wall 9(4)"
-  size 1 0.2 0.3
-}
-Wall {
-  translation 8.44 2.2 6.24
-  rotation 0 1 0 1.5708
-  name "wall 9(5)"
-  size 1 0.2 0.3
-}
-Wall {
-  translation 7.24 2.2 6.97
-  rotation 0 -1 0 -5.307179586466759e-06
-  name "wall 9(6)"
   size 1 0.2 0.3
 }
 Wall {
@@ -1706,8 +1725,17 @@ Table {
   name "table(5)"
   size 1.2 0.53 0.8
 }
+BeerBottle {
+  translation 2.27668 0.55 6.25675
+  rotation 0 1 0 -1.5707953071795862
+}
 Can {
-  translation 6.08469 0.67 8.9
+  translation 2.55469 0.61 6.28676
+}
+BeerBottle {
+  translation 2.19725 0.55 5.83642
+  rotation 0 1 0 0.523599
+  name "beer bottle(1)"
 }
 BeerBottle {
   translation 2.88787 0.55 6.31964
@@ -1962,24 +1990,10 @@ DEF TREES Transform {
   ]
 }
 TiagoSteel {
-<<<<<<< HEAD
-=======
-  hidden rotation_36 1 2.895952394127221e-10 -2.895963080592215e-10 1.5707999999999929
->>>>>>> 073794a7113aa67c4f552db5d3e03444f0c64922
-  translation 4.46793 0.172269 8.05674
-  rotation 0.9310809087605929 0.2756919729841178 0.23891897658761382 -1.6198753071795862
-  controller "lab5_controller"
+  translation 2.5 0.0804178 8.7
+  rotation 0.9995304124450651 0.026068510756879913 -0.0161055066457575 -1.5602253071795866
+  controller "lab3"
   cameraSlot [
-    Display {
-      width 360
-      height 360
-    }
-    Compass {
-      translation -0.206 0 -0.041438
-    }
-    GPS {
-      translation -0.190515 0 -0.015552
-    }
     Camera {
       rotation 0 1 0 -1.57
       width 320
