@@ -7,8 +7,8 @@ WorldInfo {
   coordinateSystem "NUE"
 }
 Viewpoint {
-  orientation -0.5975850463216277 0.5641202435814506 0.569789841252354 2.0730947890102884
-  position 10.955276647145974 21.138390149383348 8.964874555716166
+  orientation 0.23735205759275296 -0.8394872314149929 -0.488799743297474 3.9157419488893397
+  position 6.598554146925394 10.53515301420721 5.518662542290123
   exposure 0.5
   ambientOcclusionRadius 1
 }
@@ -700,65 +700,25 @@ CeilingSpotLight {
   spotLightRadius 3
 }
 DEF TREES Transform {
+  translation -5 0 -2
   scale 1 0.6 1
   children [
-    Cypress {
-      translation 4.26 0 12.53
-      rotation 0 1 0 -0.5235983071795864
-      enableBoundingObject FALSE
-    }
-    Cypress {
-      translation 4.76 0 12.53
-      name "cypress tree(1)"
-      enableBoundingObject FALSE
-    }
-    Cypress {
-      translation 5.279999999999999 0 12.53
-      rotation 0 1 0 0.7853979999999999
-      name "cypress tree(2)"
-      enableBoundingObject FALSE
-    }
-    Cypress {
-      translation 5.85 0 12.53
-      rotation 0 1 0 -0.26179930717958655
-      name "cypress tree(3)"
-      enableBoundingObject FALSE
-    }
-    Cypress {
-      translation 6.37 0 12.53
-      rotation 0 1 0 -1.0471973071795864
-      name "cypress tree(4)"
-      enableBoundingObject FALSE
-    }
-    Cypress {
-      translation 6.85 0 12.53
-      rotation 0 1 0 1.308997
-      name "cypress tree(5)"
-      enableBoundingObject FALSE
-    }
     Cypress {
       translation 7.319999999999999 0 12.53
       rotation 0 1 0 -0.7853983071795865
       name "cypress tree(6)"
       enableBoundingObject FALSE
     }
-    Cypress {
-      translation 7.9799999999999995 0 12.53
-      rotation 0 1 0 0.5235989999999999
-      name "cypress tree(7)"
-      enableBoundingObject FALSE
-    }
-    Cypress {
-      translation 8.5 0 12.53
-      name "cypress tree(8)"
-      enableBoundingObject FALSE
+    Can {
+      translation 6.41431 0.06 6.93341
+      name "can(1)"
     }
   ]
 }
 TiagoSteel {
-  translation 4.46793 0.172269 8.05674
-  rotation 0.9310809087605929 0.2756919729841178 0.23891897658761382 -1.6198753071795862
-  controller "lab5_controller"
+  translation 3.48112 0.172269 5.21586
+  rotation 0.563104018804859 0.5932630198120189 0.5752850192116435 -2.069725307179586
+  controller "controllerpy"
   cameraSlot [
     Display {
       width 360

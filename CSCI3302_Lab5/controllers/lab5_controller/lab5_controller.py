@@ -1,3 +1,6 @@
+# Implement SLAM algorithm
+# Give tiago tasks such as retrieving items
+
 """lab5 controller."""
 from controller import Robot, Motor, Camera, RangeFinder, Lidar, Keyboard
 import math
@@ -47,6 +50,10 @@ for i in range(N_PARTS):
 lidar = robot.getDevice('Hokuyo URG-04LX-UG01')
 lidar.enable(timestep)
 lidar.enablePointCloud()
+
+camera = robot.getDevice('camera')
+camera.enable(timeStep)
+
 
 # We are using a GPS and compass to disentangle mapping and localization
 gps = robot.getDevice("gps")
