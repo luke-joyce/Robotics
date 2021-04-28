@@ -7,8 +7,8 @@ WorldInfo {
   coordinateSystem "NUE"
 }
 Viewpoint {
-  orientation -0.5975850463216277 0.5641202435814506 0.569789841252354 2.0730947890102884
-  position 10.955276647145974 21.138390149383348 8.964874555716166
+  orientation 0.5727820160855072 0.7819315362352388 0.24597527251701787 5.278722229671123
+  position 0.9672080391333572 4.701816958974543 9.830390909278826
   exposure 0.5
   ambientOcclusionRadius 1
 }
@@ -167,7 +167,7 @@ Cabinet {
   ]
 }
 RubberDuck {
-  translation 10.7519 0.86 3.84199
+  translation 5.40012 0.76 5.66509
   rotation 0 1 0 -0.785395307179586
   name "rubber duck(1)"
 }
@@ -368,6 +368,16 @@ Monitor {
 ComputerMouse {
   translation 12.288115 0.71 7.181647
   rotation 0 1 0 1.308997
+}
+Table {
+  translation 3.13688 5.32907e-15 4.82791
+  rotation 0 1 0 2.85387e-06
+  name "table(1)"
+}
+Table {
+  translation 5.7008 0 5.39085
+  rotation 0 1 0 -0.785395307179586
+  name "table(2)"
 }
 Wall {
   translation 4.57 0 0
@@ -589,9 +599,6 @@ Table {
   legAppearance BrushedAluminium {
   }
 }
-Can {
-  translation 6.08469 0.67 8.9
-}
 Sofa {
   translation 8.1052 1.95399e-13 11.1117
   rotation 0 1 0 -3.1415853071795863
@@ -756,9 +763,9 @@ DEF TREES Transform {
   ]
 }
 TiagoSteel {
-  translation 4.46793 0.172269 8.05674
-  rotation 0.9310809087605929 0.2756919729841178 0.23891897658761382 -1.6198753071795862
-  controller "lab5_controller"
+  translation 4.03426 0.172269 6.99449
+  rotation 0.26280103967113394 0.6844051033143802 0.6800921026633112 -2.568815307179586
+  controller "final_controller"
   cameraSlot [
     Display {
       width 360
@@ -790,4 +797,15 @@ TiagoSteel {
 Floor {
   translation 6.5 0 6.5
   size 13 13
+}
+Can {
+  translation 5.00222 0.8 5.07351
+  name "can(1)"
+}
+Can {
+  translation 3.14 0.8 4.8
+  name "can(2)"
+}
+BeerBottle {
+  translation 5.73773 0.74 5.74498
 }
