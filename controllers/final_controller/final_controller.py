@@ -165,6 +165,13 @@ head_2_joint_MAX = -0.98
 
 obj_found = False
 
+# OG positions of arm 2 joint, arm 4 joint, & arm 6 joint
+arm_2_joint = target_pos[4]
+arm_4_joint = target_pos[6]
+arm_6_joint = target_pos[8]
+
+start = -1
+
 while robot.step(timestep) != -1:
 
     if mode == 'state_mode':
@@ -179,7 +186,7 @@ while robot.step(timestep) != -1:
                 for i in range(len(objs)):
                     if objs[i].get_id() == 842:
                     
-                        print("Rubber ducky located")
+                        #print("Rubber ducky located")
                         
                         # Get x display position of object
                         obj = objs[i]
@@ -202,9 +209,9 @@ while robot.step(timestep) != -1:
                             
                             obj_rel_pose = obj.get_position()
                             obj_rel_pose_z = obj_rel_pose[2]
-                            if abs(obj_rel_pose_z) > 0.9:
-                                vL = 0.3*MAX_SPEED
-                                vR = 0.3*MAX_SPEED
+                            if abs(obj_rel_pose_z) > 0.8:
+                                vL = 0.4*MAX_SPEED
+                                vR = 0.4*MAX_SPEED
                             else:
                                 vL = 0.0
                                 vR = 0.0
@@ -220,11 +227,13 @@ while robot.step(timestep) != -1:
                         
             # Otherwise, rotate to locate objects in room
             else:
-                vL = 0.2*MAX_SPEED
-                vR = -0.2*MAX_SPEED
+                vL = 0.4*MAX_SPEED
+                vR = -0.4*MAX_SPEED
                 
         elif current_state == 'reach_for_object':
-            print("Reaching for object")
+            #print("Reaching for object")
+            
+            # Goal positions to extend arm
             
             # joint positions to place arm above object
             reach_pos = (0.0, 0.0, 0.0,
@@ -232,13 +241,24 @@ while robot.step(timestep) != -1:
               1.0, -1.6, -0.04,
               0.0, 'inf', 'inf',
               0.045, 0.045)
+            
             for i in range(N_PARTS):
                 robot_parts[i].setPosition(float(reach_pos[i]))
+            
+            if start == -1:
+                start = time.time()    
+            end = time.time()
+            
+            if (end - start) > 3.0:
+                start = - 1
                 
-                time.sleep(1.0)
                 current_state = states[2]
+                #print("Success 1")
+            
+            
+            
         elif current_state == 'grabbing_position':
-            print("Grabbing object")
+            #print("Grabbing object")
             
             # joint positions to place grippers around object
             grab_pos = (0.0, 0.0, 0.0,
@@ -249,28 +269,50 @@ while robot.step(timestep) != -1:
             for i in range(N_PARTS):
                 robot_parts[i].setPosition(float(grab_pos[i]))
                 
-                time.sleep(1.0)
+            if start == -1:
+                start = time.time()    
+            end = time.time()
+            
+            if (end - start) > 1.0:
+                start = - 1
+                
                 current_state = states[3]
+                #print("Success 2")
             
         elif current_state == 'grab_object':
-            print("Gripping object")
+            #print("Gripping object")
             
             robot_parts[12].setPosition(0.0)
             robot_parts[13].setPosition(0.0)
             
-            time.sleep(1.0)
-            current_state = states[4]
+            if start == -1:
+                start = time.time()    
+            end = time.time()
+            
+            if (end - start) > 2.0:
+                start = - 1
+                
+                current_state = states[4]
+                #print("Success 3")
             
         elif current_state == 'pick_up':
-            print("Raising object")
+            #print("Raising object")
             
             for i in range(N_PARTS):
                 robot_parts[i].setPosition(float(target_pos[i]))
                 
-                time.sleep(5)
+            
+            if start == -1:
+                start = time.time()    
+            end = time.time()
+            
+            if (end - start) > 3.0:
+                start = - 1
+                
                 current_state = states[5]
+                #print("Success 4")
         elif current_state == 'return':
-            print("Finished")
+            #print("Finished")
             continue
         
         
@@ -332,170 +374,8 @@ while robot.step(timestep) != -1:
         
         if key == ord('C') and obj_found == True:
             print(objs[obj_index].get_id(), objs[obj_index].get_model())
-        
-                    
-                    
-        
-        if key == ord('F'):
-            if len(objs) > 0:
-                find_object = True
-            else:
-                print("No objects detected.")
-                
-            
-            
-        if key == ord('H'):
-            find_object = False
-        
-        
-        if find_object:
-            obj = objs[obj_index]
-            obj_pose_x = obj.get_position_on_image()[0]
-            obj_pose_y = obj.get_position_on_image()[1]
-            if obj_pose_x < 158:
-                ###
-                
-                vL = -MAX_SPEED*0.1
-                vR = MAX_SPEED*0.1
-                """
-                head_1_joint_cur += 0.01
-                robot_parts[1].setPosition(head_1_joint_cur)
-                """
-            elif obj_pose_x >= 162:
-                ###
-                
-                vL = MAX_SPEED*0.05
-                vR = -MAX_SPEED*0.05
-                """
-                head_1_joint_cur -= 0.01
-                robot_parts[1].setPosition(head_1_joint_cur)
-                """
-            if obj_pose_y < 158:
-                ###
-                """
-                vL = -MAX_SPEED*0.1
-                vR = MAX_SPEED*0.1
-                """
-                head_2_joint_cur += 0.01
-                robot_parts[0].setPosition(head_2_joint_cur)
-            elif obj_pose_y >= 162:
-                ###
-                """
-                vL = MAX_SPEED*0.05
-                vR = -MAX_SPEED*0.05
-                """
-                head_2_joint_cur -= 0.01
-                robot_parts[0].setPosition(head_2_joint_cur)
-            """
-            else:
-                vL = 0
-                vR = 0
-            """
-            #print(obj_pose_x, obj_pose_y)
-            
-        if key == ord('T'):
-            move_forward = True
-        
-        if move_forward:
-            obj_rel_pose = objs[0].get_position()
-            if abs(obj_rel_pose[2]) > 1.2:
-                vL = MAX_SPEED*0.5
-                vR = MAX_SPEED*0.5
-            else:
-                move_forward = False
-    
-    #arm_2_cur = 0.0
-    arm_2_MAX = 1.00
-    arm_2_MIN = -0.80
-    #arm_4_cur = 0.0
-    arm_4_MAX = 1.30
-    arm_4_MIN = -0.30
-    #arm_6_cur = 0.0
-    arm_6_MAX = 1.30
-    arm_6_MIN = -1.30
     
     
-    if mode == 'manual2':
-        key = keyboard.getKey()
-        while(keyboard.getKey() != -1): pass
-        if key == ord('P'):
-            set_orientation(0)
-            arm_2_cur = 0.0
-            arm_4_cur = 0.0
-            arm_6_cur = 0.0
-            robot_parts[5].setPosition(0.0)
-            robot_parts[7].setPosition(-1.60)
-            robot_parts[9].setPosition(-1.60)
-        elif key == ord('Q') and arm_2_cur < arm_2_MAX:
-            arm_2_cur += 0.01
-            arm_6_cur += 0.01
-            robot_parts[4].setPosition(arm_2_cur)
-            robot_parts[8].setPosition(arm_6_cur)
-            ###
-            ###
-        elif key == ord('W') and arm_2_cur > arm_2_MIN:
-            arm_2_cur -= 0.01
-            arm_6_cur -= 0.01
-            robot_parts[4].setPosition(arm_2_cur)
-            robot_parts[8].setPosition(arm_6_cur)
-            ###
-            ###
-        elif key == ord('A') and arm_4_cur < arm_4_MAX:
-            arm_4_cur += 0.01
-            arm_6_cur -= 0.01
-            robot_parts[6].setPosition(arm_4_cur)
-            robot_parts[8].setPosition(arm_6_cur)
-        elif key == ord('S') and arm_4_cur > arm_4_MIN:
-            arm_4_cur -= 0.01
-            arm_6_cur += 0.01
-            robot_parts[6].setPosition(arm_4_cur)
-            robot_parts[8].setPosition(arm_6_cur)
-        
-        elif key == ord('O'):
-            open_gripper()
-        elif key == ord('P'):
-            close_gripper()
-        
-        if key == ord('Y'):
-            print("arm 2:", arm_2_cur)
-            print("arm 4:", arm_4_cur)
-            print("arm 6:", arm_6_cur)
-        
-        if key == ord('T'):
-            move_forward = True
-        
-        set_pickup_above = (1.0, 1.0, -0.04)
-        set_pickup = (0.84, 1.04, -0.2)
-        stop_dist = 0.82
-        object_reached = False
-        pickup_above = False
-        pickuip = False
-        grab_object = False
-        
-        objs = camera.getRecognitionObjects()
-        if move_forward:
-            
-            obj = objs[0]
-            
-            obj_pose_x = obj.get_position_on_image()[0]
-            obj_pose_y = obj.get_position_on_image()[1]
-            obj_rel_pose = objs[0].get_position()
-            
-            if obj_pose_y < 158:
-                head_2_joint_cur += 0.01
-                robot_parts[0].setPosition(head_2_joint_cur)
-            elif obj_pose_y >= 162:
-                head_2_joint_cur -= 0.01
-                robot_parts[0].setPosition(head_2_joint_cur)
-            
-            #print(objs[0].get_model())
-            if abs(obj_rel_pose[2]) > stop_dist:
-                vL = MAX_SPEED*0.5
-                vR = MAX_SPEED*0.5
-            else:
-                move_forward = False
-                vL = 0.0
-                vR = 0.0
     
     robot_parts[MOTOR_LEFT].setVelocity(vL)
     robot_parts[MOTOR_RIGHT].setVelocity(vR)
