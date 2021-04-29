@@ -165,6 +165,13 @@ head_2_joint_MAX = -0.98
 
 obj_found = False
 
+# OG positions of arm 2 joint, arm 4 joint, & arm 6 joint
+arm_2_joint = target_pos[4]
+arm_4_joint = target_pos[6]
+arm_6_joint = target_pos[8]
+
+start = -1
+
 while robot.step(timestep) != -1:
 
     if mode == 'state_mode':
@@ -179,7 +186,7 @@ while robot.step(timestep) != -1:
                 for i in range(len(objs)):
                     if objs[i].get_id() == 842:
                     
-                        print("Rubber ducky located")
+                        #print("Rubber ducky located")
                         
                         # Get x display position of object
                         obj = objs[i]
@@ -202,9 +209,9 @@ while robot.step(timestep) != -1:
                             
                             obj_rel_pose = obj.get_position()
                             obj_rel_pose_z = obj_rel_pose[2]
-                            if abs(obj_rel_pose_z) > 0.9:
-                                vL = 0.3*MAX_SPEED
-                                vR = 0.3*MAX_SPEED
+                            if abs(obj_rel_pose_z) > 0.8:
+                                vL = 0.4*MAX_SPEED
+                                vR = 0.4*MAX_SPEED
                             else:
                                 vL = 0.0
                                 vR = 0.0
@@ -220,11 +227,13 @@ while robot.step(timestep) != -1:
                         
             # Otherwise, rotate to locate objects in room
             else:
-                vL = 0.2*MAX_SPEED
-                vR = -0.2*MAX_SPEED
+                vL = 0.4*MAX_SPEED
+                vR = -0.4*MAX_SPEED
                 
         elif current_state == 'reach_for_object':
-            print("Reaching for object")
+            #print("Reaching for object")
+            
+            # Goal positions to extend arm
             
             # joint positions to place arm above object
             reach_pos = (0.0, 0.0, 0.0,
@@ -232,13 +241,24 @@ while robot.step(timestep) != -1:
               1.0, -1.6, -0.04,
               0.0, 'inf', 'inf',
               0.045, 0.045)
+            
             for i in range(N_PARTS):
                 robot_parts[i].setPosition(float(reach_pos[i]))
+            
+            if start == -1:
+                start = time.time()    
+            end = time.time()
+            
+            if (end - start) > 3.0:
+                start = - 1
                 
-                time.sleep(1.0)
                 current_state = states[2]
+                #print("Success 1")
+            
+            
+            
         elif current_state == 'grabbing_position':
-            print("Grabbing object")
+            #print("Grabbing object")
             
             # joint positions to place grippers around object
             grab_pos = (0.0, 0.0, 0.0,
@@ -249,28 +269,50 @@ while robot.step(timestep) != -1:
             for i in range(N_PARTS):
                 robot_parts[i].setPosition(float(grab_pos[i]))
                 
-                time.sleep(1.0)
+            if start == -1:
+                start = time.time()    
+            end = time.time()
+            
+            if (end - start) > 1.0:
+                start = - 1
+                
                 current_state = states[3]
+                #print("Success 2")
             
         elif current_state == 'grab_object':
-            print("Gripping object")
+            #print("Gripping object")
             
             robot_parts[12].setPosition(0.0)
             robot_parts[13].setPosition(0.0)
             
-            time.sleep(1.0)
-            current_state = states[4]
+            if start == -1:
+                start = time.time()    
+            end = time.time()
+            
+            if (end - start) > 2.0:
+                start = - 1
+                
+                current_state = states[4]
+                #print("Success 3")
             
         elif current_state == 'pick_up':
-            print("Raising object")
+            #print("Raising object")
             
             for i in range(N_PARTS):
                 robot_parts[i].setPosition(float(target_pos[i]))
                 
-                time.sleep(5)
+            
+            if start == -1:
+                start = time.time()    
+            end = time.time()
+            
+            if (end - start) > 3.0:
+                start = - 1
+                
                 current_state = states[5]
+                #print("Success 4")
         elif current_state == 'return':
-            print("Finished")
+            #print("Finished")
             continue
         
         
